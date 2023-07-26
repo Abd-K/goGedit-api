@@ -1,0 +1,36 @@
+server:
+  servlet:
+    context-path: /goGedit/api
+
+spring:
+  profiles:
+    active: local
+    datasource:
+      url: jdbc:postgresql://localhost:5432/goGedit
+      username:
+      password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc.batch_size: 30
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+gogedit:
+  cors:
+    cors:
+      allowed-origins: http://localhost:3000
+      allowed-methods: "*"
+      allowed-headers: "*"
+      exposed-headers: "Authorization,Link,X-Total-Count"
+      allow-credentials: true
+      max-age: 1800
+logging:
+  level:
+    web: info
+springdoc:
+  api-docs:
+    path: /swagger/api-docs
+  swagger-ui:
+    path: /swagger/swagger-ui.html
