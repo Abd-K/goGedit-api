@@ -18,6 +18,9 @@ public class CommunityService {
   }
 
   public Community createCommunity(Community newCommunity) {
+    boolean communityExists = communityRepository.existsByName(newCommunity.getName());
+    if (communityExists) throw new IllegalArgumentException("Community exists");
+
     return saveCommunity(newCommunity);
   }
 
@@ -35,7 +38,7 @@ public class CommunityService {
 
   public Community updateCommunity(String communityId, Community updatedCommunity) {
     final Community existingCommunity = getCommunityById(communityId);
-    if(updatedCommunity.getDescription() != null) {
+    if (updatedCommunity.getDescription() != null) {
       existingCommunity.setDescription(updatedCommunity.getDescription());
     }
     return saveCommunity(existingCommunity);
