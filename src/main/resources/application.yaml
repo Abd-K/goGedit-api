@@ -17,15 +17,15 @@ spring:
         jdbc.batch_size: 30
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-gogedit:
-  cors:
-    cors:
-      allowed-origins: http://localhost:3000
-      allowed-methods: "*"
-      allowed-headers: "*"
-      exposed-headers: "Authorization,Link,X-Total-Count"
-      allow-credentials: true
-      max-age: 1800
+#gogedit:
+#  cors:
+#    cors:
+#      allowed-origins: http://localhost:3000, http://127.0.0.1:5173, http://localhost:5173
+#      allowed-methods: "*"
+#      allowed-headers: "*"
+#      exposed-headers: "Authorization,Link,X-Total-Count"
+#      allow-credentials: true
+#      max-age: 1800
 logging:
   level:
     web: info
