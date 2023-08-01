@@ -1,5 +1,6 @@
 package com.Gogedit.service;
 
+import com.Gogedit.dto.CreateCommunityDTO;
 import com.Gogedit.persistence.entity.Community;
 import com.Gogedit.persistence.repository.CommunityRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +18,12 @@ public class CommunityService {
     this.communityRepository = communityRepository;
   }
 
-  public Community createCommunity(Community newCommunity) {
-    return saveCommunity(newCommunity);
+  public Community createCommunity(CreateCommunityDTO createCommunityDTO) {
+
+    Community community = new Community();
+    community.setName(createCommunityDTO.getName());
+    community.setDescription(createCommunityDTO.getDescription());
+    return saveCommunity(community);
   }
 
   public List<Community> getCommunities() {
