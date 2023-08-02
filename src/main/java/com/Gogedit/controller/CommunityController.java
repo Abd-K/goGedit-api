@@ -1,5 +1,6 @@
 package com.Gogedit.controller;
 
+import com.Gogedit.dto.CreateCommunityDTO;
 import com.Gogedit.persistence.entity.Community;
 import com.Gogedit.service.CommunityService;
 import jakarta.validation.Valid;
@@ -30,8 +31,8 @@ public class CommunityController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Community createCommunity(@RequestBody Community communityRequest) {
-    return communityService.createCommunity(communityRequest);
+  public Community createCommunity(@RequestBody CreateCommunityDTO createCommunityDTO) {
+    return communityService.createCommunity(createCommunityDTO);
   }
 
   @GetMapping
@@ -46,10 +47,10 @@ public class CommunityController {
     return communityService.getCommunitiesByName(name);
   }
 
-  @GetMapping("/{communityId}")
+  @GetMapping("/{communityName}")
   @ResponseStatus(HttpStatus.OK)
-  public Community getCommunity(@PathVariable String communityId) {
-    return communityService.getCommunityById(communityId);
+  public Community getCommunity(@PathVariable String communityName) {
+    return communityService.getCommunityByName(communityName);
   }
 
   @PutMapping("/{communityId}")
@@ -57,5 +58,4 @@ public class CommunityController {
   public Community updateCommunity(@Valid @RequestBody Community updatedCommunity, @PathVariable String communityId) {
     return communityService.updateCommunity(communityId, updatedCommunity);
   }
-
 }
