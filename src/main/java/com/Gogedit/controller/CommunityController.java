@@ -47,10 +47,10 @@ public class CommunityController {
     return communityService.getCommunitiesByName(name);
   }
 
-  @GetMapping("/{communityId}")
+  @GetMapping("/{communityName}")
   @ResponseStatus(HttpStatus.OK)
-  public Community getCommunity(@PathVariable String communityId) {
-    return communityService.getCommunityById(communityId);
+  public Community getCommunity(@PathVariable String communityName) {
+    return communityService.getCommunityByName(communityName);
   }
 
   @PutMapping("/{communityId}")
@@ -58,5 +58,4 @@ public class CommunityController {
   public Community updateCommunity(@Valid @RequestBody Community updatedCommunity, @PathVariable String communityId) {
     return communityService.updateCommunity(communityId, updatedCommunity);
   }
-
 }
