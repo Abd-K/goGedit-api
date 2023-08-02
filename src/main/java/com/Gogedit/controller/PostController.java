@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/communities/{communityId}/posts")
+@RequestMapping("/communities/{communityName}/posts")
 public class PostController {
 
 
@@ -19,7 +19,7 @@ public class PostController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Post createPost(@PathVariable String communityId, @RequestBody CreatePostDto createPostDto) {
-        return postService.createPost(communityId, createPostDto);
+    public Post createPost(@PathVariable String communityName, @RequestBody CreatePostDto createPostDto) {
+        return postService.createPost(communityName, createPostDto);
     }
 }
