@@ -19,6 +19,8 @@ public class CommunityService {
   }
 
   public Community createCommunity(CreateCommunityDTO createCommunityDTO) {
+    boolean communityExists = communityRepository.existsByName(createCommunityDTO.getName());
+    if (communityExists) throw new IllegalArgumentException("Community exists");
 
     Community community = new Community();
     community.setName(createCommunityDTO.getName());

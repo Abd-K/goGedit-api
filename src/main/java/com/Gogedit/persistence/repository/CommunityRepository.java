@@ -9,5 +9,6 @@ public interface CommunityRepository extends JpaRepository<Community, String> {
 
   //TODO costly?
   List<Community> findAllByNameContainingIgnoreCase(String keyword);
+  boolean existsByName(String name);
   Community findCommunityByName(String name);
 }
