@@ -34,12 +34,12 @@ public class CommunityService {
     return communityRepository.findAllByNameContainingIgnoreCase(name);
   }
 
-  public Community getCommunityById(String communityId) {
-    return communityRepository.findById(communityId).get();
+  public Community getCommunityByName(String communityName) {
+    return communityRepository.findCommunityByName(communityName);
   }
 
   public Community updateCommunity(String communityId, Community updatedCommunity) {
-    final Community existingCommunity = getCommunityById(communityId);
+    final Community existingCommunity = getCommunityByName(communityId);
     if(updatedCommunity.getDescription() != null) {
       existingCommunity.setDescription(updatedCommunity.getDescription());
     }
