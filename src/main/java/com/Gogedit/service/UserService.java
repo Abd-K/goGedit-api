@@ -1,6 +1,8 @@
 package com.Gogedit.service;
 
-import com.Gogedit.dto.CreateUserDTO;
+import com.Gogedit.converter.UserToDTOConverter;
+import com.Gogedit.dto.UserDTO;
+import com.Gogedit.dto.UserRegisterRequestDTO;
 import com.Gogedit.persistence.entity.AppUser;
 import com.Gogedit.persistence.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -13,12 +15,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public AppUser createUser(CreateUserDTO createUserDTO) {
+    public UserDTO createUser(UserRegisterRequestDTO userRegisterRequestDTO) {
         //TODO: Add validation
         AppUser appUser = new AppUser();
-    appUser.setUsername(createUserDTO.getUsername());
-    appUser.setPassword(createUserDTO.getPassword());
-    return saveUser(appUser);
+    appUser.setUsername(userRegisterRequestDTO.getUsername());
+    appUser.setPassword(userRegisterRequestDTO.getPassword());
+        AppUser savedUser = saveUser(appUser);
+        return UserToDTOConverter.toDTO(savedUser);
     }
 
     private AppUser saveUser(AppUser newAppUser) {

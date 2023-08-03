@@ -1,13 +1,13 @@
 package com.Gogedit.controller;
 
-import com.Gogedit.dto.CreateUserDTO;
-import com.Gogedit.persistence.entity.AppUser;
+import com.Gogedit.dto.UserDTO;
+import com.Gogedit.dto.UserRegisterRequestDTO;
 import com.Gogedit.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/auth/register")
 public class AuthController {
 
     private final UserService userService;
@@ -18,7 +18,7 @@ public class AuthController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AppUser createUser(@RequestBody CreateUserDTO createUserDTO) {
-        return userService.createUser(createUserDTO);
+    public UserDTO register(@RequestBody UserRegisterRequestDTO userRegisterRequestDTO) {
+        return userService.createUser(userRegisterRequestDTO);
     }
 }
