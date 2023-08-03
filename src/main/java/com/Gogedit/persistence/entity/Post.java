@@ -16,6 +16,7 @@ public class Post {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     private String title;
+    @Column(length=10000)
     private String body;
 
     @ManyToOne
