@@ -29,6 +29,6 @@ public class Community {
   @NotNull
   private String description;
 
-  @OneToMany
+  @OneToMany(mappedBy = "community")
   private List<Post> posts = new ArrayList<>();
 }

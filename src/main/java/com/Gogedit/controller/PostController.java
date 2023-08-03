@@ -1,6 +1,7 @@
 package com.Gogedit.controller;
 
 import com.Gogedit.dto.post.CreatePostDto;
+import com.Gogedit.dto.post.PostDto;
 import com.Gogedit.persistence.entity.Post;
 import com.Gogedit.service.PostService;
 import org.springframework.http.HttpStatus;
@@ -21,5 +22,13 @@ public class PostController {
     @ResponseStatus(HttpStatus.CREATED)
     public Post createPost(@PathVariable String communityName, @RequestBody CreatePostDto createPostDto) {
         return postService.createPost(communityName, createPostDto);
+    }
+
+    @GetMapping("/{postId}")
+    @ResponseStatus(HttpStatus.OK)
+    public PostDto getPost(@PathVariable String postId) {
+        PostDto postDto = postService.getPost(postId);
+        return postDto;
+
     }
 }
