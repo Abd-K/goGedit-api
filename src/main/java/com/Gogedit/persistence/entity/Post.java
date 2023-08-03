@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +17,6 @@ public class Post {
     private String id;
     private String title;
     private String body;
-    private String author;
 
     @ManyToOne
     @JoinColumn(nullable = false)

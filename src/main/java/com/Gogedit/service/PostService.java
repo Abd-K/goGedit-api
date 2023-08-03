@@ -2,7 +2,6 @@ package com.Gogedit.service;
 
 import com.Gogedit.dto.post.CreatePostDto;
 import com.Gogedit.persistence.entity.Community;
-
 import com.Gogedit.persistence.entity.Post;
 import com.Gogedit.persistence.repository.CommunityRepository;
 import com.Gogedit.persistence.repository.PostRepository;
@@ -21,8 +20,8 @@ public class PostService {
     this.communityRepository = communityRepository;
   }
 
-  public Post createPost(String communityId, CreatePostDto createPostDto) {
-    Community community = communityRepository.findById(communityId).get();
+  public Post createPost(String communityName, CreatePostDto createPostDto) {
+    Community community = communityRepository.findCommunityByName(communityName);
 
     Post post = new Post();
     post.setCommunity(community);

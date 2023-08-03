@@ -6,7 +6,5 @@ import lombok.Getter;
 public class CreatePostDto {
     private String title;
     private String body;
-//    TODO: remove and replace with header?
-    private String author;
 }
 
