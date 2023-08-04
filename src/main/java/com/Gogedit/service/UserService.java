@@ -7,24 +7,36 @@ import com.Gogedit.persistence.entity.AppUser;
 import com.Gogedit.persistence.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+  public UserService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
-    public UserDTO createUser(UserRegisterRequestDTO userRegisterRequestDTO) {
-        //TODO: Add validation
-        AppUser appUser = new AppUser();
+  public UserDTO createUser(UserRegisterRequestDTO userRegisterRequestDTO) {
+    Optional<AppUser> userOptional =
+        userRepository.findAppUserByUsername(userRegisterRequestDTO.getUsername());
+
+    if (userOptional.isPresent())
+      throw new IllegalArgumentException("Username already exists");
+    if (userRegisterRequestDTO.getUsername().contains(" "))
+      throw new IllegalArgumentException("Username cannot contain spaces");
+    if (userRegisterRequestDTO.getPassword().contains(" "))
+      throw new IllegalArgumentException("Password cannot contain spaces");
+
+    AppUser appUser = new AppUser();
     appUser.setUsername(userRegisterRequestDTO.getUsername());
     appUser.setPassword(userRegisterRequestDTO.getPassword());
-        AppUser savedUser = saveUser(appUser);
-        return UserToDTOConverter.toDTO(savedUser);
-    }
+    AppUser savedUser = saveUser(appUser);
 
-    private AppUser saveUser(AppUser newAppUser) {
-        return userRepository.save(newAppUser);
-    }
+    return UserToDTOConverter.toDTO(savedUser);
+  }
+
+  private AppUser saveUser(AppUser newAppUser) {
+    return userRepository.save(newAppUser);
+  }
 }
