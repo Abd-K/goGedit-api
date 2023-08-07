@@ -3,7 +3,7 @@ package com.Gogedit.dto.post;
 import lombok.Getter;
 
 @Getter
-public class CreatePostDto {
+public class CreatePostDTO {
     private String title;
     private String body;
 }
