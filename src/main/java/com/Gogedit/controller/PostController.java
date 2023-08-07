@@ -22,8 +22,7 @@ public class PostController {
   @ResponseStatus(HttpStatus.CREATED)
   public PostDTO createPost(
       @PathVariable String communityName, @RequestBody CreatePostDTO createPostDTO) {
-    PostDTO postDTO = postService.createPost(communityName, createPostDTO);
-    return postDTO;
+    return postService.createPost(communityName, createPostDTO);
   }
 
   @GetMapping

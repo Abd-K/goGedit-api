@@ -24,6 +24,6 @@ public class Community {
   @Column(nullable = false)
   private String description;
 
-  @OneToMany(mappedBy = "community", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "community")
   private List<Post> posts = new ArrayList<>();
 }
