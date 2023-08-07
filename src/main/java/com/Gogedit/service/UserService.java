@@ -61,5 +61,4 @@ public class UserService {
   private AppUser saveUser(AppUser newAppUser) {
     return userRepository.save(newAppUser);
   }
-
 }
