@@ -1,8 +1,10 @@
 package com.Gogedit.controller;
 
-import com.Gogedit.dto.post.CreatePostDto;
-import com.Gogedit.persistence.entity.Post;
+import com.Gogedit.converter.PostToDTOConverter;
+import com.Gogedit.dto.post.CreatePostDTO;
+import com.Gogedit.dto.post.PostDTO;
 import com.Gogedit.service.PostService;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,16 +12,29 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/communities/{communityName}/posts")
 public class PostController {
 
+  private final PostService postService;
 
-    private final PostService postService;
+  public PostController(PostService postService) {
+    this.postService = postService;
+  }
 
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
+  @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  public PostDTO createPost(
+      @PathVariable String communityName, @RequestBody CreatePostDTO createPostDTO) {
+    PostDTO postDTO = postService.createPost(communityName, createPostDTO);
+    return postDTO;
+  }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Post createPost(@PathVariable String communityName, @RequestBody CreatePostDto createPostDto) {
-        return postService.createPost(communityName, createPostDto);
-    }
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  public List<PostDTO> getAllPostsByCommunityName(@PathVariable String communityName) {
+    return PostToDTOConverter.toDTOList(postService.getAllPostsByCommunityName(communityName));
+  }
+
+  @GetMapping("/{postId}")
+  @ResponseStatus(HttpStatus.OK)
+  public PostDTO getPost(@PathVariable String postId) {
+    return postService.getPost(postId);
+  }
 }
