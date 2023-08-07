@@ -1,9 +1,12 @@
 package com.Gogedit.controller;
 
+import com.Gogedit.converter.CommunityToDTOConverter;
+import com.Gogedit.dto.CommunityDTO;
 import com.Gogedit.dto.CreateCommunityDTO;
 import com.Gogedit.persistence.entity.Community;
 import com.Gogedit.service.CommunityService;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/communities")
@@ -31,31 +32,31 @@ public class CommunityController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Community createCommunity(@RequestBody CreateCommunityDTO createCommunityDTO) {
+  public CommunityDTO createCommunity(@RequestBody CreateCommunityDTO createCommunityDTO) {
     return communityService.createCommunity(createCommunityDTO);
   }
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public List<Community> getCommunities() {
+  public List<CommunityDTO> getCommunities() {
     return communityService.getCommunities();
   }
 
   @GetMapping("/search")
   @ResponseStatus(HttpStatus.OK)
-  public List<Community> getCommunitiesByKeyword(@RequestParam String name) {
+  public List<CommunityDTO> getCommunitiesByKeyword(@RequestParam String name) {
     return communityService.getCommunitiesByName(name);
   }
 
   @GetMapping("/{communityName}")
   @ResponseStatus(HttpStatus.OK)
-  public Community getCommunity(@PathVariable String communityName) {
-    return communityService.getCommunityByName(communityName);
+  public CommunityDTO getCommunity(@PathVariable String communityName) {
+    return CommunityToDTOConverter.toDTO(communityService.getCommunityByName(communityName));
   }
 
   @PutMapping("/{communityId}")
   @ResponseStatus(HttpStatus.OK)
-  public Community updateCommunity(@Valid @RequestBody Community updatedCommunity, @PathVariable String communityId) {
+  public CommunityDTO updateCommunity(@Valid @RequestBody Community updatedCommunity, @PathVariable String communityId) {
     return communityService.updateCommunity(communityId, updatedCommunity);
   }
 }
