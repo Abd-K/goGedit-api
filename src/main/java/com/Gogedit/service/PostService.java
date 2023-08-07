@@ -4,8 +4,6 @@ import com.Gogedit.converter.PostToDTOConverter;
 import com.Gogedit.dto.post.CreatePostDTO;
 import com.Gogedit.dto.post.PostDTO;
 import com.Gogedit.exceptions.PostNotFoundException;
-import com.Gogedit.dto.post.CreatePostDto;
-import com.Gogedit.dto.post.PostDto;
 import com.Gogedit.persistence.entity.Community;
 import com.Gogedit.persistence.entity.Post;
 import com.Gogedit.persistence.repository.CommunityRepository;
