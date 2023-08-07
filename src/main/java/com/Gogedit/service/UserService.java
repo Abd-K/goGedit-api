@@ -3,6 +3,7 @@ package com.Gogedit.service;
 import com.Gogedit.converter.UserToDTOConverter;
 import com.Gogedit.dto.UserDTO;
 import com.Gogedit.dto.UserRegisterRequestDTO;
+import com.Gogedit.dto.UserSignInRequestDTO;
 import com.Gogedit.persistence.entity.AppUser;
 import com.Gogedit.persistence.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,29 @@ public class UserService {
     return UserToDTOConverter.toDTO(savedUser);
   }
 
+  public UserDTO getUser(UserSignInRequestDTO userSignInRequestDTO) {
+    String userSignInUsername = userSignInRequestDTO.getUsername();
+    String userSignInPassword = userSignInRequestDTO.getPassword();
+
+    Optional<AppUser> userOptional =
+            userRepository.findAppUserByUsername(userSignInUsername);
+      if (userOptional.isPresent()) {
+        AppUser user = userOptional.get();
+
+        if (userSignInPassword.equals(user.getPassword())) {
+                return UserToDTOConverter.toDTO(user);
+        }
+      else {
+        throw new IllegalArgumentException("Password is incorrect");
+      }
+    }
+    else {
+      throw new IllegalArgumentException("Username is incorrect");
+    }
+  }
+
   private AppUser saveUser(AppUser newAppUser) {
     return userRepository.save(newAppUser);
   }
+
 }
