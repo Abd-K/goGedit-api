@@ -10,7 +10,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
 
   @Query(
           """
-        SELECT new com.Gogedit.dto.post.PostSummaryDTO(p.id, p.title, p.body, c.name, SIZE(p.comments), p.createdDate)
+        SELECT new com.Gogedit.dto.post.PostSummaryDTO(p.id, p.title, p.body, c.name, p.createdDate, SIZE(p.comments))
         FROM Post p
         JOIN p.community c
         ORDER BY p.createdDate DESC
@@ -20,7 +20,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
 
   @Query(
       """
-    SELECT new com.Gogedit.dto.post.PostSummaryDTO(p.id, p.title, p.body, c.name, SIZE(p.comments), p.createdDate)
+    SELECT new com.Gogedit.dto.post.PostSummaryDTO(p.id, p.title, p.body, c.name, p.createdDate, SIZE(p.comments))
     FROM Post p
     JOIN p.community c
     WHERE c.name = :communityName

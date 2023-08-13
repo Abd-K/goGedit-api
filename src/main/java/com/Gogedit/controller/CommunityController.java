@@ -31,7 +31,7 @@ public class CommunityController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public CommunityDTO createCommunity(@RequestBody CreateCommunityDTO createCommunityDTO) {
+  public CommunitySummaryDTO createCommunity(@RequestBody CreateCommunityDTO createCommunityDTO) {
     return communityService.createCommunity(createCommunityDTO);
   }
 
@@ -55,7 +55,8 @@ public class CommunityController {
 
   @PutMapping("/{communityId}")
   @ResponseStatus(HttpStatus.OK)
-  public CommunityDTO updateCommunity(@Valid @RequestBody Community updatedCommunity, @PathVariable String communityId) {
+  public CommunitySummaryDTO updateCommunity(
+      @Valid @RequestBody Community updatedCommunity, @PathVariable String communityId) {
     return communityService.updateCommunity(communityId, updatedCommunity);
   }
 }

@@ -13,23 +13,20 @@ import org.springframework.data.annotation.CreatedDate;
 @Setter
 @Entity
 public class Post {
-
+ 
   @Id
   @GeneratedValue(generator = "system-uuid")
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
-
   @Column(nullable = false)
   private String title;
-
   @Column(length = 10_000)
   private String body;
-
   @ManyToOne
   @JoinColumn(nullable = false)
   private Community community;
 
-  @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+   @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
   Set<Comment> comments = new HashSet<>();
 
   @CreatedDate

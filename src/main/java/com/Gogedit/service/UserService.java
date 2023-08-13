@@ -5,9 +5,8 @@ import com.Gogedit.dto.UserDTO;
 import com.Gogedit.dto.UserRegisterRequestDTO;
 import com.Gogedit.persistence.entity.AppUser;
 import com.Gogedit.persistence.repository.UserRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
