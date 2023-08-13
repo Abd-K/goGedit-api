@@ -1,8 +1,8 @@
 package com.Gogedit.service;
 
 import com.Gogedit.converter.CommentToDTOConverter;
-import com.Gogedit.dto.CommentDTO;
-import com.Gogedit.dto.CreateCommentDTO;
+import com.Gogedit.dto.comment.CommentDTO;
+import com.Gogedit.dto.comment.CreateCommentDTO;
 import com.Gogedit.exceptions.CommentNotFoundException;
 import com.Gogedit.persistence.entity.Comment;
 import com.Gogedit.persistence.entity.Post;

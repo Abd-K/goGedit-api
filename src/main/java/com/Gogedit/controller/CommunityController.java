@@ -1,6 +1,5 @@
 package com.Gogedit.controller;
 
-import com.Gogedit.dto.community.CommunityDTO;
 import com.Gogedit.dto.community.CommunitySummaryDTO;
 import com.Gogedit.dto.community.CreateCommunityDTO;
 import com.Gogedit.persistence.entity.Community;

@@ -1,4 +1,4 @@
-package com.Gogedit.dto;
+package com.Gogedit.dto.comment;
 
 import java.time.LocalDateTime;
 import java.util.Set;

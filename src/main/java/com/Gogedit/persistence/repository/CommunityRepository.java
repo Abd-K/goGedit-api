@@ -12,22 +12,13 @@ public interface CommunityRepository extends JpaRepository<Community, String> {
   // TODO costly?
   @Query(
       """
-                SELECT new com.Gogedit.dto.community.CommunitySummaryDTO(c.name, c.description, SIZE(p), c.createdDate)
-                FROM Community c
-                JOIN c.posts p
-                WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
-                GROUP BY c
+          SELECT new com.Gogedit.dto.community.CommunitySummaryDTO(c.name, c.description, SIZE(p), c.createdDate)
+          FROM Community c
+          JOIN c.posts p
+          WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
+          GROUP BY c
         """)
   List<CommunitySummaryDTO> findAllByNameContainingIgnoreCase(String keyword);
-  //  @Query(
-  //      """
-  //              SELECT c.name AS name, c.description AS description, SIZE(p) as postCount
-  //              FROM Community c
-  //              JOIN c.posts p
-  //              WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
-  //              GROUP BY c.id, c.name, c.description
-  //          """)
-  //  List<CommunitySummaryAbstraction> findAllByNameContainingIgnoreCase(String keyword);
 
   boolean existsByName(String name);
 
@@ -42,10 +33,6 @@ public interface CommunityRepository extends JpaRepository<Community, String> {
   Optional<CommunitySummaryDTO> findCommunitySummaryByName(String name);
 
   Optional<Community> findCommunityByName(String name);
-
-  //  @Query("SELECT c.name, c.description, COUNT(p) as postCount FROM Community c LEFT JOIN c.posts
-  // p GROUP BY c.name, c.description")
-  //  List<CommunitySummaryAbstraction> findAllWithPostCount();
 
   @Query(
       """

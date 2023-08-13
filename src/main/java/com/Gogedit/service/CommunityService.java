@@ -1,7 +1,6 @@
 package com.Gogedit.service;
 
 import com.Gogedit.converter.CommunityToDTOConverter;
-import com.Gogedit.dto.community.CommunityDTO;
 import com.Gogedit.dto.community.CommunitySummaryDTO;
 import com.Gogedit.dto.community.CreateCommunityDTO;
 import com.Gogedit.exceptions.CommunityNotFoundException;
@@ -21,7 +20,7 @@ public class CommunityService {
     this.communityRepository = communityRepository;
   }
 
-  public CommunityDTO createCommunity(CreateCommunityDTO createCommunityDTO) {
+  public CommunitySummaryDTO createCommunity(CreateCommunityDTO createCommunityDTO) {
     boolean communityExists = communityRepository.existsByName(createCommunityDTO.getName());
     if (communityExists) throw new IllegalArgumentException("Community exists");
 
@@ -50,7 +49,7 @@ public class CommunityService {
         .orElseThrow(() -> new CommunityNotFoundException(communityName));
   }
 
-  public CommunityDTO updateCommunity(String communityName, Community updatedCommunity) {
+  public CommunitySummaryDTO updateCommunity(String communityName, Community updatedCommunity) {
     final Community existingCommunity = getCommunityByName(communityName);
     if (updatedCommunity.getDescription() != null) {
       existingCommunity.setDescription(updatedCommunity.getDescription());
