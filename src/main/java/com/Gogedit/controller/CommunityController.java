@@ -1,8 +1,8 @@
 package com.Gogedit.controller;
 
-import com.Gogedit.converter.CommunityToDTOConverter;
-import com.Gogedit.dto.CommunityDTO;
-import com.Gogedit.dto.CreateCommunityDTO;
+import com.Gogedit.dto.community.CommunityDTO;
+import com.Gogedit.dto.community.CommunitySummaryDTO;
+import com.Gogedit.dto.community.CreateCommunityDTO;
 import com.Gogedit.persistence.entity.Community;
 import com.Gogedit.service.CommunityService;
 import jakarta.validation.Valid;
@@ -38,20 +38,20 @@ public class CommunityController {
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public List<CommunityDTO> getCommunities() {
+  public List<CommunitySummaryDTO> getCommunities() {
     return communityService.getCommunities();
   }
 
   @GetMapping("/search")
   @ResponseStatus(HttpStatus.OK)
-  public List<CommunityDTO> getCommunitiesByKeyword(@RequestParam String name) {
-    return communityService.getCommunitiesByName(name);
+  public List<CommunitySummaryDTO> searchCommunitiesByKeyword(@RequestParam String name) {
+    return communityService.searchCommunitiesByKeyword(name);
   }
 
   @GetMapping("/{communityName}")
   @ResponseStatus(HttpStatus.OK)
-  public CommunityDTO getCommunity(@PathVariable String communityName) {
-    return CommunityToDTOConverter.toDTO(communityService.getCommunityByName(communityName));
+  public CommunitySummaryDTO getCommunity(@PathVariable String communityName) {
+    return communityService.getCommunitySummaryByName(communityName);
   }
 
   @PutMapping("/{communityId}")

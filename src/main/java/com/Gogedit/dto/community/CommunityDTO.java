@@ -1,8 +1,5 @@
-package com.Gogedit.dto;
+package com.Gogedit.dto.community;
 
-import com.Gogedit.dto.post.PostDTO;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,6 +8,6 @@ import lombok.Getter;
 public class CommunityDTO {
     private String name;
     private String description;
-    private List<PostDTO> posts = new ArrayList<>();
+    private Long postCount;
 }
 

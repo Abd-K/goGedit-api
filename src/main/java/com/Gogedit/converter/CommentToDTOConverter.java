@@ -14,7 +14,8 @@ public class CommentToDTOConverter {
         comment.getText(),
         comment.getAuthor(),
         comment.getPost().getId(),
-        replies);
+        replies,
+        comment.getCreatedDate());
   }
 
   public static Set<CommentDTO> toDTOSet(Set<Comment> comments) {

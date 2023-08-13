@@ -1,16 +1,6 @@
 package com.Gogedit.dto.post;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import java.time.LocalDateTime;
 
-@Setter
-@Getter
-@AllArgsConstructor
-public class PostSummaryDTO {
-    private String id;
-    private String title;
-    private String body;
-    private String communityName;
-    private Integer commentCount;
-}
+public record PostSummaryDTO (String id, String title, String body, String communityName, Integer commentCount, LocalDateTime createdDate) {}
+

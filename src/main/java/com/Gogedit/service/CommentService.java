@@ -21,13 +21,10 @@ public class CommentService {
   }
 
   public CommentDTO createComment(
-      String communityName, String postId, CreateCommentDTO createCommentDto) {
+      String communityName, String postId, CreateCommentDTO createCommentDTO) {
     Post post = postService.getPostById(postId);
 
-    Comment comment = new Comment();
-    comment.setPost(post);
-    comment.setText(createCommentDto.getText());
-    comment.setAuthor(createCommentDto.getAuthor());
+    Comment comment = new Comment(createCommentDTO.getText(), createCommentDTO.getAuthor(), post);
     return CommentToDTOConverter.toDTO(commentRepository.save(comment));
   }
 
@@ -35,17 +32,16 @@ public class CommentService {
       String communityName, String postId, String commentId, CreateCommentDTO createCommentDTO) {
     Comment parentComment = getCommentById(commentId);
 
-    Comment reply = new Comment();
+    Comment reply = new Comment(createCommentDTO.getText(), createCommentDTO.getAuthor(), parentComment.getPost());
+
     reply.setParentComment(parentComment);
-    reply.setPost(parentComment.getPost());
-    reply.setText(createCommentDTO.getText());
-    reply.setAuthor(createCommentDTO.getAuthor());
 
     return CommentToDTOConverter.toDTO(commentRepository.save(reply));
   }
 
   private Comment getCommentById(String commentId) {
-    return commentRepository.findById(commentId)
+    return commentRepository
+        .findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException(commentId));
   }
 

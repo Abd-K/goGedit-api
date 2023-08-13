@@ -1,8 +1,9 @@
 package com.Gogedit.service;
 
 import com.Gogedit.converter.CommunityToDTOConverter;
-import com.Gogedit.dto.CommunityDTO;
-import com.Gogedit.dto.CreateCommunityDTO;
+import com.Gogedit.dto.community.CommunityDTO;
+import com.Gogedit.dto.community.CommunitySummaryDTO;
+import com.Gogedit.dto.community.CreateCommunityDTO;
 import com.Gogedit.exceptions.CommunityNotFoundException;
 import com.Gogedit.persistence.entity.Community;
 import com.Gogedit.persistence.repository.CommunityRepository;
@@ -24,32 +25,29 @@ public class CommunityService {
     boolean communityExists = communityRepository.existsByName(createCommunityDTO.getName());
     if (communityExists) throw new IllegalArgumentException("Community exists");
 
-    Community community = new Community();
-    community.setName(createCommunityDTO.getName());
-    community.setDescription(createCommunityDTO.getDescription());
+    Community community =
+        new Community(createCommunityDTO.getName(), createCommunityDTO.getDescription());
     return CommunityToDTOConverter.toDTO(saveCommunity(community));
   }
 
-  public List<CommunityDTO> getCommunities() {
-    List<Community> allCommunities = communityRepository.findAll();
-
-    return CommunityToDTOConverter.toDTOList(allCommunities);
+  public List<CommunitySummaryDTO> getCommunities() {
+    return communityRepository.findAllCommunitiesWithPostCounts();
   }
 
-  public List<CommunityDTO> getCommunitiesByName(String name) {
-
-    List<Community> allByNameContainingIgnoreCase =
-        communityRepository.findAllByNameContainingIgnoreCase(name);
-    return CommunityToDTOConverter.toDTOList(allByNameContainingIgnoreCase);
+  public List<CommunitySummaryDTO> searchCommunitiesByKeyword(String name) {
+    return communityRepository.findAllByNameContainingIgnoreCase(name);
   }
 
   public Community getCommunityByName(String communityName) {
-    Community communityByName =
-        communityRepository
-            .findCommunityByName(communityName)
-            .orElseThrow(() -> new CommunityNotFoundException(communityName));
+    return communityRepository
+        .findCommunityByName(communityName)
+        .orElseThrow(() -> new CommunityNotFoundException(communityName));
+  }
 
-    return communityByName;
+  public CommunitySummaryDTO getCommunitySummaryByName(String communityName) {
+    return communityRepository
+        .findCommunitySummaryByName(communityName)
+        .orElseThrow(() -> new CommunityNotFoundException(communityName));
   }
 
   public CommunityDTO updateCommunity(String communityName, Community updatedCommunity) {

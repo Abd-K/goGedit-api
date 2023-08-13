@@ -1,6 +1,5 @@
 package com.Gogedit.service;
 
-import com.Gogedit.converter.PostToDTOConverter;
 import com.Gogedit.dto.post.PostSummaryDTO;
 import com.Gogedit.persistence.repository.PostRepository;
 import java.util.List;
@@ -16,6 +15,6 @@ public class SuggestionsService {
   }
 
   public List<PostSummaryDTO> getSuggestedPosts() {
-    return PostToDTOConverter.toSummaryDTOList(postRepository.findAllByOrderByCreatedDateDesc());
+    return postRepository.findAllByOrderByCreatedDateDesc();
   }
 }
