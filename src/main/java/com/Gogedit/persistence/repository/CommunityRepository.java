@@ -14,7 +14,7 @@ public interface CommunityRepository extends JpaRepository<Community, String> {
       """
           SELECT new com.Gogedit.dto.community.CommunitySummaryDTO(c.name, c.description, SIZE(p), c.createdDate)
           FROM Community c
-          JOIN c.posts p
+          LEFT JOIN c.posts p
           WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :keyword, '%'))
           GROUP BY c
         """)
@@ -26,7 +26,7 @@ public interface CommunityRepository extends JpaRepository<Community, String> {
       """
       SELECT new com.Gogedit.dto.community.CommunitySummaryDTO(c.name, c.description, COUNT(p), c.createdDate)
       FROM Community c
-      JOIN c.posts p
+      LEFT JOIN c.posts p
       WHERE c.name = :name
       GROUP BY c
    """)
@@ -38,7 +38,7 @@ public interface CommunityRepository extends JpaRepository<Community, String> {
       """
           SELECT new com.Gogedit.dto.community.CommunitySummaryDTO(c.name, c.description, COUNT(p), c.createdDate)
           FROM Community c
-          JOIN c.posts p
+          LEFT JOIN c.posts p
           GROUP BY c
   """)
   List<CommunitySummaryDTO> findAllCommunitiesWithPostCounts();
