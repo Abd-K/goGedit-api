@@ -12,7 +12,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
           """
         SELECT new com.Gogedit.dto.post.PostSummaryDTO(p.id, p.title, p.body, c.name, p.createdDate, SIZE(p.comments))
         FROM Post p
-        JOIN p.community c
+        LEFT JOIN p.community c
         ORDER BY p.createdDate DESC
         LIMIT 20
     """)
@@ -22,7 +22,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
       """
     SELECT new com.Gogedit.dto.post.PostSummaryDTO(p.id, p.title, p.body, c.name, p.createdDate, SIZE(p.comments))
     FROM Post p
-    JOIN p.community c
+    LEFT JOIN p.community c
     WHERE c.name = :communityName
 """)
   List<PostSummaryDTO> findAllPostsByCommunityName(String communityName);
