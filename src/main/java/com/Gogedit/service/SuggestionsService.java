@@ -15,6 +15,6 @@ public class SuggestionsService {
   }
 
   public List<PostSummaryDTO> getSuggestedPosts() {
-    return postRepository.findAllByOrderByCreatedDateDesc();
+    return postRepository.findMostRecentPostsLimit20();
   }
 }

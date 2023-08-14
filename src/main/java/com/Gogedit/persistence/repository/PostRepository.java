@@ -16,7 +16,7 @@ public interface PostRepository extends JpaRepository<Post, String> {
         ORDER BY p.createdDate DESC
         LIMIT 20
     """)
-    List<PostSummaryDTO> findAllByOrderByCreatedDateDesc();
+    List<PostSummaryDTO> findMostRecentPostsLimit20();
 
   @Query(
       """
