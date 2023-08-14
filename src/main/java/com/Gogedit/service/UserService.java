@@ -1,8 +1,7 @@
 package com.Gogedit.service;
 
-import com.Gogedit.converter.UserToDTOConverter;
-import com.Gogedit.dto.UserDTO;
 import com.Gogedit.dto.UserRegisterRequestDTO;
+import com.Gogedit.exceptions.UserNotFoundException;
 import com.Gogedit.persistence.entity.AppUser;
 import com.Gogedit.persistence.repository.UserRepository;
 import java.util.Optional;
@@ -16,23 +15,24 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  public UserDTO createUser(UserRegisterRequestDTO userRegisterRequestDTO) {
-    Optional<AppUser> userOptional =
-        userRepository.findAppUserByUsername(userRegisterRequestDTO.getUsername());
-
-    if (userOptional.isPresent())
-      throw new IllegalArgumentException("Username already exists");
+  public AppUser createUser(UserRegisterRequestDTO userRegisterRequestDTO) {
     if (userRegisterRequestDTO.getUsername().contains(" "))
       throw new IllegalArgumentException("Username cannot contain spaces");
     if (userRegisterRequestDTO.getPassword().contains(" "))
       throw new IllegalArgumentException("Password cannot contain spaces");
 
-    AppUser appUser = new AppUser();
-    appUser.setUsername(userRegisterRequestDTO.getUsername());
-    appUser.setPassword(userRegisterRequestDTO.getPassword());
-    AppUser savedUser = saveUser(appUser);
+    AppUser appUser = new AppUser(userRegisterRequestDTO.getUsername(), userRegisterRequestDTO.getPassword());
+    return saveUser(appUser);
+  }
 
-    return UserToDTOConverter.toDTO(savedUser);
+  public AppUser getUserByUsername(String username) {
+    return userRepository
+        .findAppUserByUsername(username)
+        .orElseThrow(() -> new UserNotFoundException(username));
+  }
+
+  public Optional<AppUser> getUserOptionalByUsername(String username) {
+    return userRepository.findAppUserByUsername(username);
   }
 
   private AppUser saveUser(AppUser newAppUser) {
