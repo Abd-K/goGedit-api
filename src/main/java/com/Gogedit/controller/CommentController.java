@@ -1,8 +1,8 @@
 package com.Gogedit.controller;
 
 import com.Gogedit.converter.CommentToDTOConverter;
-import com.Gogedit.dto.CommentDTO;
-import com.Gogedit.dto.CreateCommentDTO;
+import com.Gogedit.dto.comment.CommentDTO;
+import com.Gogedit.dto.comment.CreateCommentDTO;
 import com.Gogedit.service.CommentService;
 import java.util.Set;
 import org.springframework.http.HttpStatus;

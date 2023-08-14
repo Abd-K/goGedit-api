@@ -1,4 +1,4 @@
-package com.Gogedit.dto;
+package com.Gogedit.dto.comment;
 
 import lombok.Getter;
 

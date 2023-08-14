@@ -3,6 +3,7 @@ package com.Gogedit.service;
 import com.Gogedit.converter.PostToDTOConverter;
 import com.Gogedit.dto.post.CreatePostDTO;
 import com.Gogedit.dto.post.PostDTO;
+import com.Gogedit.dto.post.PostSummaryDTO;
 import com.Gogedit.exceptions.PostNotFoundException;
 import com.Gogedit.persistence.entity.Community;
 import com.Gogedit.persistence.entity.Post;
@@ -20,7 +21,10 @@ public class PostService {
   private final CommunityRepository communityRepository;
   private final CommunityService communityService;
 
-  public PostService(PostRepository postRepository, CommunityRepository communityRepository, CommunityService communityService) {
+  public PostService(
+      PostRepository postRepository,
+      CommunityRepository communityRepository,
+      CommunityService communityService) {
     this.postRepository = postRepository;
     this.communityRepository = communityRepository;
     this.communityService = communityService;
@@ -29,10 +33,7 @@ public class PostService {
   public PostDTO createPost(String communityName, CreatePostDTO createPostDTO) {
     Community community = communityService.getCommunityByName(communityName);
 
-    Post post = new Post();
-
-    post.setCommunity(community);
-    post.setTitle(createPostDTO.getTitle());
+    Post post = new Post(createPostDTO.getTitle(), community);
 
     if (!createPostDTO.getBody().trim().isEmpty()) {
       post.setBody(createPostDTO.getBody());
@@ -42,10 +43,9 @@ public class PostService {
     return postDTO;
   }
 
-  public List<Post> getAllPostsByCommunityName(String communityName) {
-      Community community = communityService.getCommunityByName(communityName);
+  public List<PostSummaryDTO> getAllPostsByCommunityName(String communityName) {
 
-      return community.getPosts();
+    return postRepository.findAllPostsByCommunityName(communityName);
   }
 
   public PostDTO getPost(String postId) {
@@ -53,7 +53,6 @@ public class PostService {
   }
 
   public Post getPostById(String postId) {
-    return postRepository.findById(postId)
-            .orElseThrow(() -> new PostNotFoundException(postId));
+    return postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException(postId));
   }
 }

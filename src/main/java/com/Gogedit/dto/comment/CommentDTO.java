@@ -1,5 +1,6 @@
-package com.Gogedit.dto;
+package com.Gogedit.dto.comment;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,4 +13,5 @@ public class CommentDTO {
     private String author;
     private String postId;
     private Set<CommentDTO> replies;
+    private LocalDateTime createdDate;
 }

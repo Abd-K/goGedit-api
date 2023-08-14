@@ -1,17 +1,19 @@
 package com.Gogedit.persistence.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Comment {
+
   @Id
   @GeneratedValue(generator = "system-uuid")
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -30,4 +32,16 @@ public class Comment {
 
   @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
   private Set<Comment> replies = new HashSet<>();
+
+  @CreatedDate
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(nullable = false, updatable = false)
+  private LocalDateTime createdDate = LocalDateTime.now();
+
+  public Comment(String text, String author, Post post) {
+    this.text = text;
+    this.author = author;
+    this.post = post;
+  }
+
 }
