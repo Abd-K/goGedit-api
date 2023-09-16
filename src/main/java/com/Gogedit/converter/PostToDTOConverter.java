@@ -19,6 +19,7 @@ public class PostToDTOConverter {
         post.getBody(),
         post.getCommunity().getName(),
         post.getCreatedDate(),
-        postComments);
+        postComments,
+        post.getAuthor().getUsername());
   }
 }

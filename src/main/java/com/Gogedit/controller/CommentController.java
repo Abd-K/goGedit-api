@@ -1,15 +1,13 @@
 package com.Gogedit.controller;
 
-import com.Gogedit.converter.CommentToDTOConverter;
 import com.Gogedit.dto.comment.CommentDTO;
-import com.Gogedit.dto.comment.CreateCommentDTO;
+import com.Gogedit.dto.comment.UpdateCommentDTO;
 import com.Gogedit.service.CommentService;
-import java.util.Set;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/communities/{communityName}/posts/{postId}/comments")
+@RequestMapping("/comments")
 public class CommentController {
 
   private final CommentService commentService;
@@ -18,29 +16,16 @@ public class CommentController {
     this.commentService = commentService;
   }
 
-    @PostMapping("/{commentId}/replies")
-    @ResponseStatus(HttpStatus.CREATED)
-    public CommentDTO createReply(
-        @PathVariable String communityName,
-        @PathVariable String postId,
-        @PathVariable String commentId,
-        @RequestBody CreateCommentDTO createCommentDTO) {
-      return commentService.createReply(communityName, postId, commentId, createCommentDTO);
-    }
-
-  @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  public CommentDTO createComment(
-      @PathVariable String communityName,
-      @PathVariable String postId,
-      @RequestBody CreateCommentDTO createCommentDto) {
-    return commentService.createComment(communityName, postId, createCommentDto);
+  @DeleteMapping("/{commentId}")
+  @ResponseStatus(HttpStatus.OK)
+  public void deleteComment(@PathVariable String commentId) {
+    commentService.deleteComment(commentId);
   }
 
-  @GetMapping
+  @PatchMapping("/{commentId}")
   @ResponseStatus(HttpStatus.OK)
-  public Set<CommentDTO> getCommentsByPostId(@PathVariable String postId) {
-    return CommentToDTOConverter.toDTOSet(commentService.getCommentsByPostId(postId));
+  public CommentDTO updatePost(@PathVariable String commentId, @RequestBody UpdateCommentDTO updateCommentDTO) {
+    return commentService.patchUpdateComment(commentId, updateCommentDTO);
   }
 }
 

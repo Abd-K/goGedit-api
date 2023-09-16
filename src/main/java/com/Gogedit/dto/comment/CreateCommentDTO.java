@@ -1,9 +1,3 @@
 package com.Gogedit.dto.comment;
 
-import lombok.Getter;
-
-@Getter
-public class CreateCommentDTO {
-  private String text;
-  private String author;
-}
+public record CreateCommentDTO (String text) {}

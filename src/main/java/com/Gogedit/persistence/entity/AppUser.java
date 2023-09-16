@@ -1,9 +1,8 @@
 package com.Gogedit.persistence.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -21,6 +20,9 @@ public class AppUser {
     private String username;
     @NotNull
     private String password;
+
+    @OneToMany
+    private List<Post> posts;
 
     public AppUser(String username, String password) {
         this.username = username;

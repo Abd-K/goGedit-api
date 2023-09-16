@@ -8,4 +8,5 @@ public record PostSummaryDTO(
     String body,
     String communityName,
     LocalDateTime createdDate,
-    Integer commentCount) {}
+    Integer commentCount,
+    String authorUsername) {}

@@ -9,6 +9,7 @@ public record PostDTO(
     String title,
     String body,
     String communityName,
-    LocalDateTime createDate,
-    List<CommentDTO> comments
+    LocalDateTime createdDate,
+    List<CommentDTO> comments,
+    String authorUsername
     ) {}

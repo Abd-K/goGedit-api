@@ -6,42 +6,57 @@ import java.util.HashSet;
 import java.util.Set;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
+@SQLDelete(sql = "UPDATE post SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class Post {
- 
+
   @Id
   @GeneratedValue(generator = "system-uuid")
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
   private String id;
+
   @Column(nullable = false)
   private String title;
+
   @Column(length = 10_000)
   private String body;
+
   @ManyToOne
   @JoinColumn(nullable = false)
   private Community community;
 
-   @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
   Set<Comment> comments = new HashSet<>();
+
+  @ManyToOne
+  @JoinColumn(nullable = false)
+  private AppUser author;
 
   @CreatedDate
   @Temporal(TemporalType.TIMESTAMP)
   @Column(nullable = false, updatable = false)
   private LocalDateTime createdDate = LocalDateTime.now();
 
-  public Post(String title, Community community) {
+  private boolean deleted = false;
+
+  public Post(String title, Community community, AppUser author) {
     this.title = title;
     this.community = community;
+    this.author = author;
   }
 
-  public Post(String title, String body, Community community) {
+  public Post(String title, Community community, AppUser author, String body) {
     this.title = title;
-    this.body = body;
     this.community = community;
+    this.author = author;
+    this.body = body;
   }
 }

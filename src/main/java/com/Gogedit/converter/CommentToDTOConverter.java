@@ -12,7 +12,7 @@ public class CommentToDTOConverter {
     return new CommentDTO(
         comment.getId(),
         comment.getText(),
-        comment.getAuthor(),
+        comment.getAuthor().getUsername(),
         comment.getPost().getId(),
         replies,
         comment.getCreatedDate());

@@ -2,16 +2,11 @@ package com.Gogedit.dto.comment;
 
 import java.time.LocalDateTime;
 import java.util.Set;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@AllArgsConstructor
-@Getter
-public class CommentDTO {
-    private String id;
-    private String text;
-    private String author;
-    private String postId;
-    private Set<CommentDTO> replies;
-    private LocalDateTime createdDate;
-}
+public record CommentDTO(
+    String id,
+    String text,
+    String authorUsername,
+    String postId,
+    Set<CommentDTO> replies,
+    LocalDateTime createdDate) {}

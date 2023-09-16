@@ -6,12 +6,16 @@ import java.util.HashSet;
 import java.util.Set;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@SQLDelete(sql = "UPDATE comment SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class Comment {
 
   @Id
@@ -21,14 +25,16 @@ public class Comment {
 
   @Column(length = 10_000, nullable = false)
   private String text;
-  private String author;
+
+  @ManyToOne
+  @JoinColumn(nullable = false)
+  private AppUser author;
 
   @ManyToOne
   @JoinColumn(nullable = false)
   private Post post;
 
-  @ManyToOne
-  private Comment parentComment;
+  @ManyToOne private Comment parentComment;
 
   @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL)
   private Set<Comment> replies = new HashSet<>();
@@ -38,10 +44,11 @@ public class Comment {
   @Column(nullable = false, updatable = false)
   private LocalDateTime createdDate = LocalDateTime.now();
 
-  public Comment(String text, String author, Post post) {
+  private boolean deleted = false;
+
+  public Comment(String text, AppUser author, Post post) {
     this.text = text;
     this.author = author;
     this.post = post;
   }
-
 }
